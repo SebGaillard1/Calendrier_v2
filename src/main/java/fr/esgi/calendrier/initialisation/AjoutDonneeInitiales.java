@@ -34,19 +34,16 @@ public class AjoutDonneeInitiales implements CommandLineRunner {
 
     private int getMonthDays(int month) {
         if (month == 1) {
-            // Février
             return 28;
         } else if (month == 3 || month == 5 || month == 8 || month == 10) {
-            // Avril, Juin, Septembre, Novembre
             return 30;
         } else {
-            // Janvier, Mars, Mai, Juillet, Août, Octobre, Décembre
             return 31;
         }
     }
 
     private void ajoutDesJours() {
-        int mois = new Date().getMonth();
+        int mois = new Date().getMonth() + 1;
 
         for (int i = 1; i <= getMonthDays(mois); i++) {
             JourId jourId = new JourId(i, mois);
@@ -58,10 +55,11 @@ public class AjoutDonneeInitiales implements CommandLineRunner {
 
     private void ajoutDesReactions() {
         ArrayList<String> emojis = new ArrayList<>();
-        emojis.add("\uD83D\uDE00"); // 😀
-        emojis.add("\uD83D\uDE02"); // 😂
-        emojis.add("\uD83D\uDE0D"); // 😍
-        emojis.add("\uD83D\uDE21"); // 😡
+        emojis.add("\uD83D\uDE00");
+        emojis.add("\uD83D\uDE02");
+        emojis.add("\uD83D\uDE0D");
+        emojis.add("\uD83D\uDE23");
+        emojis.add("\uD83D\uDE21");
 
         for (String emoji : emojis) {
             TypeReaction typeReaction = new TypeReaction();
@@ -72,10 +70,10 @@ public class AjoutDonneeInitiales implements CommandLineRunner {
 
     private void ajoutUtilisateurParDefaut() {
         Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setNom("demo");
-        utilisateur.setPrenom("demo");
-        utilisateur.setPassword("demo1234");
-        utilisateur.setEmail("demo@esgi.fr");
+        utilisateur.setNom("John");
+        utilisateur.setPrenom("Doe");
+        utilisateur.setPassword("aaaaa");
+        utilisateur.setEmail("a@esgi.fr");
         utilisateur.setTheme("light");
         utilisateurService.save(utilisateur);
     }

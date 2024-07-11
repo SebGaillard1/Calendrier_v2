@@ -14,7 +14,7 @@
 </head>
 <body th:attr="data-bs-theme=${#authentication.principal.theme}">
 <div class="container mt-5">
-    <h3 class="card-title" th:text="'Placer un gif distant pour le ' + ${jour.date()}"></h3>
+    <h3 class="card-title" th:text="'Ajouter votre gif du ' + ${jour.date()}"></h3>
 
     <div class="row mt-4">
         <form enctype="multipart/form-data" method="post" th:action="@{'/gif/save/form/' + ${jour.date()}}">

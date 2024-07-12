@@ -41,49 +41,36 @@ class UtilisateurRestControllerUnitTest {
 
     @Test
     void testGetAllUtilisateurs() throws Exception {
-        // Crée un utilisateur ficti
         Utilisateur utilisateur = new Utilisateur();
         Page<Utilisateur> utilisateurs = new PageImpl<>(Arrays.asList(utilisateur));
 
-        // Utilisation de ArgumentCaptor pour capturer l'argument Pageable
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
 
-        // Configure le mock pour retourner la page d'utilisateurs lorsqu'on appelle findAll
         when(utilisateurService.findAll(pageableCaptor.capture())).thenReturn(utilisateurs);
 
-        // Effectue une requête GET sur l'endpoint /api/utilisateurs avec des paramètres de pagination
         mvc.perform(get("/api/utilisateurs?page=0&size=10"))
-                // Vérifie que le statut de la réponse est 200 OK
                 .andExpect(status().isOk());
 
-        // Vérifie que la méthode findAll du service a été appelée une fois avec un Pageable
         verify(utilisateurService, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
     void testGetUtilisateurById() throws Exception {
         Utilisateur utilisateur = new Utilisateur();
-        // Configure le mock pour retourner l'utilisateur fictif lorsqu'on appelle findById
         when(utilisateurService.findById(anyLong())).thenReturn(utilisateur);
 
-        // Effectue une requête GET sur l'endpoint /api/utilisateurs/1
         mvc.perform(get("/api/utilisateurs/1"))
-                // Vérifie que le statut de la réponse est 200 OK
                 .andExpect(status().isOk());
 
-        // Vérifie que la méthode findById du service a été appelée une fois avec n'importe quel Long
         verify(utilisateurService, times(1)).findById(anyLong());
     }
 
     @Test
     void testCreateUtilisateur() throws Exception {
-        // Crée un utilisateur fictif
         Utilisateur utilisateur = new Utilisateur();
 
-        // Configure le mock pour retourner l'utilisateur fictif lors de la conversion de DTO à entité
         when(utilisateurMapper.toEntity(any(UtilisateurDto.class))).thenReturn(utilisateur);
 
-        // Effectue une requête POST sur l'endpoint /api/utilisateurs avec un contenu JSON
         mvc.perform(post("/api/utilisateurs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -95,10 +82,8 @@ class UtilisateurRestControllerUnitTest {
                                    "password":"password"
                                  }
                                 """))
-                // Vérifie que le statut de la réponse est 201 Created
                 .andExpect(status().isCreated());
 
-        // Vérifie que la méthode save du service a été appelée une fois avec n'importe quel Utilisateur
         verify(utilisateurService, times(1)).save(any(Utilisateur.class));
     }
 

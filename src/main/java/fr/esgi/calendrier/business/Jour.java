@@ -60,8 +60,4 @@ public class Jour {
         );
         return usernames;
     }
-
-    public int getNbReactions() {
-        return reactions.size();
-    }
 }

@@ -68,7 +68,6 @@ public class MainController {
             sortBuilder.append(',');
             sortBuilder.append(order.getDirection());
             if (iterator.hasNext()) {
-                // Bricodage
                 sortBuilder.append("&sort=");
             }
         }
@@ -122,16 +121,13 @@ public class MainController {
             }
         }
 
-        // Création du gif
         Gif gif = new Gif();
         gif.setUrl(url);
         gif.setLegende(legende);
         gifService.save(gif);
 
-        // Ajout du gif au jour
         jourService.setGif(jourId, gif, utilisateur);
 
-        // Soustraction des points
         utilisateurService.subractPoints(utilisateur, jourEntity.getPoints());
 
         return "redirect:/";

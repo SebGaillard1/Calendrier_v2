@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Day {
+public class DayCal {
     @EmbeddedId
     @NonNull
     private IdDay id;
@@ -23,10 +23,10 @@ public class Day {
 
     @ManyToOne()
     @Nullable()
-    private User utilisateur;
+    private User user;
 
     @OneToMany()
-    @JoinColumn(name = "jour", referencedColumnName = "jour")
+    @JoinColumn(name = "dayCal", referencedColumnName = "dayCal")
     @JoinColumn(name = "mois", referencedColumnName = "mois")
     private List<DayReaction> reactions = new ArrayList<>();
 
@@ -54,9 +54,9 @@ public class Day {
     public List<String> getUsernamesByReaction(ReactionType typeReaction) {
         List<String> usernames = new ArrayList<>();
         reactions.stream().filter(
-                reactionJour -> reactionJour.getId().getReactionId().equals(typeReaction.getId())
+                reactionDay -> reactionDay.getId().getReactionId().equals(typeReaction.getId())
         ).forEach(
-                reactionJour -> usernames.add(reactionJour.getUtilisateur().nom)
+                reactionDay -> usernames.add(reactionDay.getUser().nom)
         );
         return usernames;
     }

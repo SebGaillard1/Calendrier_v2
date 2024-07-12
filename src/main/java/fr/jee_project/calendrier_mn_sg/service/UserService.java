@@ -19,5 +19,5 @@ public interface UserService extends UserDetailsService {
 
     User subractPoints(User utilisateur, int points);
 
-    User utilisateurFromSecurityContext(SecurityContext securityContext);
+    User userFromSecurityContext(SecurityContext securityContext);
 }

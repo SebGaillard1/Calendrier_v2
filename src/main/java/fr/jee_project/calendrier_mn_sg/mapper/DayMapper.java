@@ -1,6 +1,6 @@
 package fr.jee_project.calendrier_mn_sg.mapper;
 
-import fr.jee_project.calendrier_mn_sg.business.Day;
+import fr.jee_project.calendrier_mn_sg.business.DayCal;
 import fr.jee_project.calendrier_mn_sg.dto.DayDto;
 import org.mapstruct.*;
 
@@ -9,11 +9,11 @@ import org.mapstruct.*;
         componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface DayMapper {
-    Day toEntity(DayDto jourDto);
+    DayCal toEntity(DayDto jourDto);
 
-    DayDto toDto(Day jour);
+    DayDto toDto(DayCal jour);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Day partialUpdate(DayDto jourDto,
-                      @MappingTarget Day jour);
+    DayCal partialUpdate(DayDto jourDto,
+                         @MappingTarget DayCal jour);
 }

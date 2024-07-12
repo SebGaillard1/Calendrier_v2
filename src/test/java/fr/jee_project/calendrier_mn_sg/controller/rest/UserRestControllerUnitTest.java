@@ -30,48 +30,48 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class UtilisateurRestControllerUnitTest {
+class UserRestControllerUnitTest {
 
     @Autowired
     MockMvc mvc;
     @MockBean
-    UserService utilisateurService;
+    UserService userService;
     @MockBean
-    UserMapper utilisateurMapper;
+    UserMapper userMapper;
 
     @Test
-    void testGetAllUtilisateurs() throws Exception {
-        User utilisateur = new User();
-        Page<User> utilisateurs = new PageImpl<>(Arrays.asList(utilisateur));
+    void testGetAllusers() throws Exception {
+        User user = new User();
+        Page<User> users = new PageImpl<>(Arrays.asList(user));
 
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
 
-        when(utilisateurService.findAll(pageableCaptor.capture())).thenReturn(utilisateurs);
+        when(userService.findAll(pageableCaptor.capture())).thenReturn(users);
 
-        mvc.perform(get("/api/utilisateurs?page=0&size=10"))
+        mvc.perform(get("/api/users?page=0&size=10"))
                 .andExpect(status().isOk());
 
-        verify(utilisateurService, times(1)).findAll(any(Pageable.class));
+        verify(userService, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
-    void testGetUtilisateurById() throws Exception {
-        User utilisateur = new User();
-        when(utilisateurService.findById(anyLong())).thenReturn(utilisateur);
+    void testGetuserById() throws Exception {
+        User user = new User();
+        when(userService.findById(anyLong())).thenReturn(user);
 
-        mvc.perform(get("/api/utilisateurs/1"))
+        mvc.perform(get("/api/users/1"))
                 .andExpect(status().isOk());
 
-        verify(utilisateurService, times(1)).findById(anyLong());
+        verify(userService, times(1)).findById(anyLong());
     }
 
     @Test
-    void testCreateUtilisateur() throws Exception {
-        User utilisateur = new User();
+    void testCreateuser() throws Exception {
+        User user = new User();
 
-        when(utilisateurMapper.toEntity(any(UserDto.class))).thenReturn(utilisateur);
+        when(userMapper.toEntity(any(UserDto.class))).thenReturn(user);
 
-        mvc.perform(post("/api/utilisateurs")
+        mvc.perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                  {
@@ -84,16 +84,16 @@ class UtilisateurRestControllerUnitTest {
                                 """))
                 .andExpect(status().isCreated());
 
-        verify(utilisateurService, times(1)).save(any(User.class));
+        verify(userService, times(1)).save(any(User.class));
     }
 
 
     @Test
-    void testUpdateUtilisateur() throws Exception {
-        User utilisateur = new User();
-        when(utilisateurService.findById(anyLong())).thenReturn(utilisateur);
+    void testUpdateuser() throws Exception {
+        User user = new User();
+        when(userService.findById(anyLong())).thenReturn(user);
 
-        mvc.perform(put("/api/utilisateurs/1")
+        mvc.perform(put("/api/users/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                   {
@@ -106,19 +106,19 @@ class UtilisateurRestControllerUnitTest {
                                 """))
                 .andExpect(status().isOk());
 
-        verify(utilisateurService, times(1)).findById(anyLong());
-        verify(utilisateurService, times(1)).save(any(User.class));
+        verify(userService, times(1)).findById(anyLong());
+        verify(userService, times(1)).save(any(User.class));
     }
 
     @Test
-    void testDeleteUtilisateur() throws Exception {
-        User utilisateur = new User();
-        when(utilisateurService.findById(anyLong())).thenReturn(utilisateur);
+    void testDeleteuser() throws Exception {
+        User user = new User();
+        when(userService.findById(anyLong())).thenReturn(user);
 
-        mvc.perform(delete("/api/utilisateurs/1"))
+        mvc.perform(delete("/api/users/1"))
                 .andExpect(status().isOk());
 
-        verify(utilisateurService, times(1)).findById(anyLong());
-        verify(utilisateurService, times(1)).delete(any(User.class));
+        verify(userService, times(1)).findById(anyLong());
+        verify(userService, times(1)).delete(any(User.class));
     }
 }

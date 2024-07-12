@@ -15,52 +15,52 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/utilisateurs")
+@RequestMapping("api/users")
 @AllArgsConstructor
 public class UserRestController {
 
-    private UserService utilisateurService;
-    private UserMapper utilisateurMapper;
+    private UserService userService;
+    private UserMapper userMapper;
 
     @GetMapping("")
-    @Operation(summary = "Get all utilisateurs")
-    public Page<User> getAllUtilisateurs(@PageableDefault() Pageable pageable) {
-        return utilisateurService.findAll(pageable);
+    @Operation(summary = "Get all users")
+    public Page<User> getAllusers(@PageableDefault() Pageable pageable) {
+        return userService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get utilisateur by id")
-    public User getUtilisateurById(@PathVariable Long id) {
-        return utilisateurService.findById(id);
+    @Operation(summary = "Get user by id")
+    public User getuserById(@PathVariable Long id) {
+        return userService.findById(id);
     }
 
     @PostMapping("")
-    @Operation(summary = "Create a new utilisateur", responses = {@ApiResponse(responseCode = "201", description = "Ajout ok")})
+    @Operation(summary = "Create a new user", responses = {@ApiResponse(responseCode = "201", description = "Ajout ok")})
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createUtilisateur(
-            @Valid @RequestBody UserDto utilisateur
+    public void createuser(
+            @Valid @RequestBody UserDto user
     ) {
-        utilisateurService.save(utilisateurMapper.toEntity(utilisateur));
+        userService.save(userMapper.toEntity(user));
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update utilisateur by id")
-    public void updateUtilisateur(
+    @Operation(summary = "Update user by id")
+    public void updateuser(
             @PathVariable Long id,
-            @Valid @RequestBody UserDto utilisateur
+            @Valid @RequestBody UserDto user
     ) {
-        User utilisateurToUpdate = utilisateurService.findById(id);
-        utilisateurToUpdate.setNom(utilisateur.getNom());
-        utilisateurToUpdate.setPrenom(utilisateur.getPrenom());
-        utilisateurToUpdate.setEmail(utilisateur.getEmail());
-        utilisateurToUpdate.setTheme(utilisateur.getTheme());
-        utilisateurService.save(utilisateurToUpdate);
+        User userToUpdate = userService.findById(id);
+        userToUpdate.setNom(user.getNom());
+        userToUpdate.setPrenom(user.getPrenom());
+        userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setTheme(user.getTheme());
+        userService.save(userToUpdate);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete utilisateur by id")
-    public void deleteUtilisateur(@PathVariable Long id) {
-        User utilisateur = utilisateurService.findById(id);
-        utilisateurService.delete(utilisateur);
+    @Operation(summary = "Delete user by id")
+    public void deleteuser(@PathVariable Long id) {
+        User user = userService.findById(id);
+        userService.delete(user);
     }
 }

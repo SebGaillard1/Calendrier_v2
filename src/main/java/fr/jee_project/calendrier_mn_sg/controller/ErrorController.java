@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class ErrorController {
 
-    private final UserService utilisateurService;
+    private final UserService userService;
 
     Logger logger = LoggerFactory.getLogger(ErrorController.class);
 
@@ -27,7 +27,7 @@ public class ErrorController {
         modelAndView.setViewName("error");
 
         try {
-            User currentUser = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+            User currentUser = userService.userFromSecurityContext(SecurityContextHolder.getContext());
             modelAndView.addObject("theme", currentUser.getTheme());
         } catch (Exception e) {
             modelAndView.addObject("theme", "light");
@@ -46,7 +46,7 @@ public class ErrorController {
         modelAndView.setViewName("error");
 
         try {
-            User currentUser = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+            User currentUser = userService.userFromSecurityContext(SecurityContextHolder.getContext());
             modelAndView.addObject("theme", currentUser.getTheme());
         } catch (Exception e) {
             modelAndView.addObject("theme", "light");

@@ -1,6 +1,6 @@
 package fr.jee_project.calendrier_mn_sg.controller.rest;
 
-import fr.jee_project.calendrier_mn_sg.business.Day;
+import fr.jee_project.calendrier_mn_sg.business.DayCal;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 import fr.jee_project.calendrier_mn_sg.dto.DayDto;
 import fr.jee_project.calendrier_mn_sg.dto.UpdatedDayDto;
@@ -16,50 +16,50 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/jours")
+@RequestMapping("api/days")
 @AllArgsConstructor
 public class DayRestController {
 
-    private final DayService jourService;
-    private final DayMapper jourMapper;
+    private final DayService dayService;
+    private final DayMapper dayMapper;
 
     @GetMapping("")
-    @Operation(summary = "Get all jours")
-    public Page<Day> getAllJours(@PageableDefault() Pageable pageable) {
-        return jourService.findAll(pageable);
+    @Operation(summary = "Get all days")
+    public Page<DayCal> getAllDays(@PageableDefault() Pageable pageable) {
+        return dayService.findAll(pageable);
     }
 
-    @GetMapping("/{jour}/{mois}")
-    @Operation(summary = "Get jour by id")
-    public Day getJourById(@PathVariable String jour, @PathVariable String mois) {
-        IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        return jourService.findById(jourId);
+    @GetMapping("/{day}/{mois}")
+    @Operation(summary = "Get day by id")
+    public DayCal getDayById(@PathVariable String day, @PathVariable String mois) {
+        IdDay dayId = new IdDay(Integer.parseInt(day), Integer.parseInt(mois));
+        return dayService.findById(dayId);
     }
 
     @PostMapping("")
-    @Operation(summary = "Create a new jour", responses = {@ApiResponse(responseCode = "201", description = "Ajout ok")})
+    @Operation(summary = "Create a new day", responses = {@ApiResponse(responseCode = "201", description = "Ajout ok")})
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createJour(@RequestBody DayDto jourDto) {
-        jourService.save(jourMapper.toEntity(jourDto));
+    public void createDay(@RequestBody DayDto dayDto) {
+        dayService.save(dayMapper.toEntity(dayDto));
     }
 
-    @PutMapping("/{jour}/{mois}")
-    @Operation(summary = "Update jour by id")
-    public void updateJour(@PathVariable String jour, @PathVariable String mois, @RequestBody UpdatedDayDto jourUpdateDto) {
-        IdDay id = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        Day jourToUpdate = jourService.findById(id);
-        jourToUpdate.setGif(jourUpdateDto.getGif());
-        jourToUpdate.setPoints(jourUpdateDto.getPoints());
-        jourToUpdate.setUtilisateur(jourUpdateDto.getUtilisateur());
-        jourService.save(jourToUpdate);
+    @PutMapping("/{day}/{mois}")
+    @Operation(summary = "Update day by id")
+    public void updateDay(@PathVariable String day, @PathVariable String mois, @RequestBody UpdatedDayDto dayUpdateDto) {
+        IdDay id = new IdDay(Integer.parseInt(day), Integer.parseInt(mois));
+        DayCal dayToUpdate = dayService.findById(id);
+        dayToUpdate.setGif(dayUpdateDto.getGif());
+        dayToUpdate.setPoints(dayUpdateDto.getPoints());
+        dayToUpdate.setUser(dayUpdateDto.getUtilisateur());
+        dayService.save(dayToUpdate);
     }
 
-    @DeleteMapping("/{jour}/{mois}")
-    @Operation(summary = "Delete jour by id")
-    public void deleteJour(@PathVariable String jour, @PathVariable String mois) {
-        IdDay id = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        Day jourToDelete = jourService.findById(id);
-        jourService.delete(jourToDelete);
+    @DeleteMapping("/{day}/{mois}")
+    @Operation(summary = "Delete day by id")
+    public void deleteDay(@PathVariable String day, @PathVariable String mois) {
+        IdDay id = new IdDay(Integer.parseInt(day), Integer.parseInt(mois));
+        DayCal dayToDelete = dayService.findById(id);
+        dayService.delete(dayToDelete);
     }
 }
 

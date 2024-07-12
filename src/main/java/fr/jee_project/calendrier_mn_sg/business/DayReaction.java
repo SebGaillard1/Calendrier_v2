@@ -10,17 +10,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "reaction_jour")
+@Table(name = "reaction_day")
 public class DayReaction {
     @EmbeddedId
     private IdDayReaction id;
 
-    @MapsId("utilisateurId")
+    @MapsId("userId")
     @ManyToOne
-    @JoinColumn(name = "utilisateur_id", insertable = false, updatable = false)
-    private User utilisateur;
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 
-    @MapsId("reactionId")
+    @MapsId("idReaction")
     @ManyToOne
     @JoinColumn(name = "reaction_id", insertable = false, updatable = false)
     private ReactionType typeReaction;

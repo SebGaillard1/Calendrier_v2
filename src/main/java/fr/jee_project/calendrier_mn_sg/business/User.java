@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
-    private List<Day> jours = new ArrayList<>();
+    private List<DayCal> jours = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

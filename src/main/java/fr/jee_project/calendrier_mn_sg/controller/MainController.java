@@ -1,12 +1,11 @@
 package fr.jee_project.calendrier_mn_sg.controller;
 
 import fr.jee_project.calendrier_mn_sg.business.Gif;
-import fr.jee_project.calendrier_mn_sg.business.Day;
+import fr.jee_project.calendrier_mn_sg.business.DayCal;
 import fr.jee_project.calendrier_mn_sg.business.ReactionType;
 import fr.jee_project.calendrier_mn_sg.business.User;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 import fr.jee_project.calendrier_mn_sg.dto.UserDto;
-import fr.jee_project.calendrier_mn_sg.mapper.GifMapper;
 import fr.jee_project.calendrier_mn_sg.mapper.UserMapper;
 import fr.jee_project.calendrier_mn_sg.service.*;
 import jakarta.validation.Valid;
@@ -26,14 +25,12 @@ import java.util.Iterator;
 @AllArgsConstructor
 public class MainController {
 
-    private final UserService utilisateurService;
-    private final UserMapper utilisateurMapper;
-
-    private final DayService jourService;
+    private final UserService userService;
+    private final UserMapper userMapper;
+    private final DayService dayService;
     private final GifService gifService;
-    private final GifMapper gifMapper;
     private final ReactionTypeService typeReactionService;
-    private final DayReactionService reactionJourService;
+    private final DayReactionService reactiondayService;
 
     @GetMapping("/register")
     public String showRegistrationForm() {
@@ -41,8 +38,8 @@ public class MainController {
     }
 
     @PostMapping("/register")
-    public String registration(@Valid UserDto utilisateurDto) {
-        utilisateurService.save(utilisateurMapper.toEntity(utilisateurDto));
+    public String registration(@Valid UserDto userDto) {
+        userService.save(userMapper.toEntity(userDto));
         return "redirect:/register?success";
     }
 
@@ -57,7 +54,7 @@ public class MainController {
             @PageableDefault(size = 7) Pageable pageable
     ) {
 
-        model.addAttribute("jours", jourService.findAll(pageable));
+        model.addAttribute("days", dayService.findAll(pageable));
         model.addAttribute("typeReactions", typeReactionService.findAll());
 
         Iterator<Sort.Order> iterator = pageable.getSort().iterator();
@@ -68,7 +65,6 @@ public class MainController {
             sortBuilder.append(',');
             sortBuilder.append(order.getDirection());
             if (iterator.hasNext()) {
-                // Bricodage
                 sortBuilder.append("&sort=");
             }
         }
@@ -77,40 +73,40 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("gif/save/form/{jour}/{mois}")
+    @GetMapping("gif/save/form/{day}/{mois}")
     public String gifDistant(
             Model model,
-            @PathVariable(value = "jour") String jour,
+            @PathVariable(value = "day") String day,
             @PathVariable(value = "mois") String mois,
             @RequestParam(value = "distant", defaultValue = "true") String distant
     ) {
-        IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        Day jourEntity = jourService.findById(jourId);
+        IdDay dayId = new IdDay(Integer.parseInt(day), Integer.parseInt(mois));
+        DayCal dayEntity = dayService.findById(dayId);
 
-        model.addAttribute("jour", jourEntity);
+        model.addAttribute("day", dayEntity);
         model.addAttribute("distant", Boolean.parseBoolean(distant));
 
         return "gif";
     }
 
-    @PostMapping("gif/save/form/{jour}/{mois}")
+    @PostMapping("gif/save/form/{day}/{mois}")
     public String addGif(
             String url,
             String legende,
             MultipartFile file,
-            @PathVariable(value = "jour") String jour,
+            @PathVariable(value = "day") String day,
             @PathVariable(value = "mois") String mois
     ) {
-        User utilisateur = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+        User user = userService.userFromSecurityContext(SecurityContextHolder.getContext());
 
-        IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        Day jourEntity = jourService.findById(jourId);
+        IdDay dayId = new IdDay(Integer.parseInt(day), Integer.parseInt(mois));
+        DayCal dayEntity = dayService.findById(dayId);
 
-        if (jourEntity.getGif() != null) {
+        if (dayEntity.getGif() != null) {
             throw new IllegalArgumentException("Gif déjà ajouté");
         }
 
-        if (utilisateur.getSolde() < jourEntity.getPoints()) {
+        if (user.getSolde() < dayEntity.getPoints()) {
             throw new IllegalArgumentException("Solde insuffisant");
         }
 
@@ -122,33 +118,30 @@ public class MainController {
             }
         }
 
-        // Création du gif
         Gif gif = new Gif();
         gif.setUrl(url);
         gif.setLegende(legende);
         gifService.save(gif);
 
-        // Ajout du gif au jour
-        jourService.setGif(jourId, gif, utilisateur);
+        dayService.setGif(dayId, gif, user);
 
-        // Soustraction des points
-        utilisateurService.subractPoints(utilisateur, jourEntity.getPoints());
+        userService.subractPoints(user, dayEntity.getPoints());
 
         return "redirect:/";
     }
 
-    @GetMapping("/jour/reaction/{jour}/{mois}/{reaction}")
+    @GetMapping("/day/reaction/{day}/{mois}/{reaction}")
     public String addReaction(
-            @PathVariable(value = "jour") String jour,
+            @PathVariable(value = "day") String day,
             @PathVariable(value = "mois") String mois,
             @PathVariable(value = "reaction") String reaction
     ) {
-        User utilisateur = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+        User user = userService.userFromSecurityContext(SecurityContextHolder.getContext());
 
-        IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
+        IdDay dayId = new IdDay(Integer.parseInt(day), Integer.parseInt(mois));
 
         ReactionType typeReactionEntity = typeReactionService.findById(Long.parseLong(reaction));
-        reactionJourService.addOrRemoveReactionJour(jourId, typeReactionEntity, utilisateur);
+        reactiondayService.addOrRemoveReactionDay(dayId, typeReactionEntity, user);
 
         return "redirect:/";
     }

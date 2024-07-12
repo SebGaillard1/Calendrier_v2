@@ -5,5 +5,5 @@ import fr.jee_project.calendrier_mn_sg.business.User;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 
 public interface DayReactionService {
-    void addOrRemoveReactionJour(IdDay jourId, ReactionType typeReaction, User utilisateur);
+    void addOrRemoveReactionDay(IdDay dayId, ReactionType reactionType, User user);
 }

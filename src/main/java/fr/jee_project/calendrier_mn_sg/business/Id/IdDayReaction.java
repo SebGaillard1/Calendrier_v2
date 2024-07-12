@@ -14,7 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IdDayReaction implements Serializable {
-    @Column(name = "jour_id")
+    @Column(name = "day_id")
     private IdDay jourId;
     @Column(name = "utilisateur_id")
     private Long utilisateurId;

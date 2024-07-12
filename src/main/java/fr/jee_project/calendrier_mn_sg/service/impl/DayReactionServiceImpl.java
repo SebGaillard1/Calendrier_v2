@@ -19,15 +19,16 @@ public class DayReactionServiceImpl implements DayReactionService {
     private final DayReactionRepository reactionJourRepository;
 
     @Override
-    public void addOrRemoveReactionJour(IdDay jourId, ReactionType typeReaction, User utilisateur) {
+    public void addOrRemoveReactionDay(IdDay jourId, ReactionType typeReaction, User utilisateur) {
         if (reactionJourRepository.existsById(new IdDayReaction(jourId, utilisateur.getId(), typeReaction.getId()))) {
             reactionJourRepository.deleteById(new IdDayReaction(jourId, utilisateur.getId(), typeReaction.getId()));
         } else {
             DayReaction reactionJour = new DayReaction();
             reactionJour.setId(new IdDayReaction(jourId, utilisateur.getId(), typeReaction.getId()));
-            reactionJour.setUtilisateur(utilisateur);
+            reactionJour.setUser(utilisateur);
             reactionJour.setTypeReaction(typeReaction);
             reactionJourRepository.save(reactionJour);
         }
     }
+
 }

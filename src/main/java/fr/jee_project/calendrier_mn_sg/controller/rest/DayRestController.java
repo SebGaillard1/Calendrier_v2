@@ -1,6 +1,6 @@
 package fr.jee_project.calendrier_mn_sg.controller.rest;
 
-import fr.jee_project.calendrier_mn_sg.business.Day;
+import fr.jee_project.calendrier_mn_sg.business.DayCal;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 import fr.jee_project.calendrier_mn_sg.dto.DayDto;
 import fr.jee_project.calendrier_mn_sg.dto.UpdatedDayDto;
@@ -25,13 +25,13 @@ public class DayRestController {
 
     @GetMapping("")
     @Operation(summary = "Get all jours")
-    public Page<Day> getAllJours(@PageableDefault() Pageable pageable) {
+    public Page<DayCal> getAllJours(@PageableDefault() Pageable pageable) {
         return jourService.findAll(pageable);
     }
 
     @GetMapping("/{jour}/{mois}")
     @Operation(summary = "Get jour by id")
-    public Day getJourById(@PathVariable String jour, @PathVariable String mois) {
+    public DayCal getJourById(@PathVariable String jour, @PathVariable String mois) {
         IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
         return jourService.findById(jourId);
     }
@@ -47,7 +47,7 @@ public class DayRestController {
     @Operation(summary = "Update jour by id")
     public void updateJour(@PathVariable String jour, @PathVariable String mois, @RequestBody UpdatedDayDto jourUpdateDto) {
         IdDay id = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        Day jourToUpdate = jourService.findById(id);
+        DayCal jourToUpdate = jourService.findById(id);
         jourToUpdate.setGif(jourUpdateDto.getGif());
         jourToUpdate.setPoints(jourUpdateDto.getPoints());
         jourToUpdate.setUtilisateur(jourUpdateDto.getUtilisateur());
@@ -58,7 +58,7 @@ public class DayRestController {
     @Operation(summary = "Delete jour by id")
     public void deleteJour(@PathVariable String jour, @PathVariable String mois) {
         IdDay id = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        Day jourToDelete = jourService.findById(id);
+        DayCal jourToDelete = jourService.findById(id);
         jourService.delete(jourToDelete);
     }
 }

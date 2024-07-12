@@ -1,23 +1,23 @@
 package fr.jee_project.calendrier_mn_sg.service;
 
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
-    Page<User> findAll(Pageable pageable);
+    Page<UserCal> findAll(Pageable pageable);
 
-    User findByEmail(String email);
+    UserCal findByEmail(String email);
 
-    User findById(Long id);
+    UserCal findById(Long id);
 
-    void save(User utilisateur);
+    void save(UserCal utilisateur);
 
-    void delete(User utilisateur);
+    void delete(UserCal utilisateur);
 
-    User subractPoints(User utilisateur, int points);
+    UserCal subractPoints(UserCal utilisateur, int points);
 
-    User utilisateurFromSecurityContext(SecurityContext securityContext);
+    UserCal utilisateurFromSecurityContext(SecurityContext securityContext);
 }

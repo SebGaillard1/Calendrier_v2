@@ -1,8 +1,8 @@
 package fr.jee_project.calendrier_mn_sg.service.impl;
 
 import fr.jee_project.calendrier_mn_sg.business.Gif;
-import fr.jee_project.calendrier_mn_sg.business.Day;
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.DayCal;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 import fr.jee_project.calendrier_mn_sg.repository.DayRepository;
 import fr.jee_project.calendrier_mn_sg.service.DayService;
@@ -20,30 +20,30 @@ public class DayServiceImpl implements DayService {
     private final DayRepository jourRepository;
 
     @Override
-    public void save(Day jour) {
+    public void save(DayCal jour) {
         this.jourRepository.save(jour);
     }
 
     @Override
-    public void setGif(IdDay id, Gif gif, User utilisateur) {
-        Day jour = this.jourRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Day not found"));
+    public void setGif(IdDay id, Gif gif, UserCal utilisateur) {
+        DayCal jour = this.jourRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Day not found"));
         jour.setGif(gif);
         jour.setUtilisateur(utilisateur);
         this.jourRepository.save(jour);
     }
 
     @Override
-    public Page<Day> findAll(Pageable pageable) {
+    public Page<DayCal> findAll(Pageable pageable) {
         return this.jourRepository.findAll(pageable);
     }
 
     @Override
-    public Day findById(IdDay id) {
+    public DayCal findById(IdDay id) {
         return this.jourRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Day not found"));
     }
 
     @Override
-    public void delete(Day jour) {
+    public void delete(DayCal jour) {
         this.jourRepository.delete(jour);
     }
 }

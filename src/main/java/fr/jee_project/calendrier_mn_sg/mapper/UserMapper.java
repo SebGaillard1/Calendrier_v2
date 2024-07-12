@@ -1,6 +1,6 @@
 package fr.jee_project.calendrier_mn_sg.mapper;
 
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.dto.UserDto;
 import org.mapstruct.*;
 
@@ -9,11 +9,11 @@ import org.mapstruct.*;
         componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface UserMapper {
-    User toEntity(UserDto utilisateurDto);
+    UserCal toEntity(UserDto utilisateurDto);
 
-    UserDto toDto(User utilisateur);
+    UserDto toDto(UserCal utilisateur);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    User partialUpdate(UserDto utilisateurDto,
-                       @MappingTarget User utilisateur);
+    UserCal partialUpdate(UserDto utilisateurDto,
+                       @MappingTarget UserCal utilisateur);
 }

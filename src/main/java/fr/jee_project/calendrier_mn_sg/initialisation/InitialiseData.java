@@ -3,9 +3,9 @@ package fr.jee_project.calendrier_mn_sg.initialisation;
 import fr.jee_project.calendrier_mn_sg.business.*;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 import fr.jee_project.calendrier_mn_sg.service.*;
-import fr.jee_project.calendrier_mn_sg.business.Day;
+import fr.jee_project.calendrier_mn_sg.business.DayCal;
 import fr.jee_project.calendrier_mn_sg.business.ReactionType;
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.service.DayService;
 import fr.jee_project.calendrier_mn_sg.service.GifService;
 import fr.jee_project.calendrier_mn_sg.service.ReactionTypeService;
@@ -55,7 +55,7 @@ public class InitialiseData implements CommandLineRunner {
         for (int i = 1; i <= getMonthDays(mois); i++) {
             IdDay jourId = new IdDay(i, mois);
             int point = random.nextInt(100);
-            Day jour = new Day(jourId, point);
+            DayCal jour = new DayCal(jourId, point);
             jourService.save(jour);
         }
     }
@@ -76,7 +76,7 @@ public class InitialiseData implements CommandLineRunner {
     }
 
     private void ajoutUtilisateurParDefaut() {
-        User utilisateur = new User();
+        UserCal utilisateur = new UserCal();
         utilisateur.setNom("John");
         utilisateur.setPrenom("Doe");
         utilisateur.setPassword("aaaaa");

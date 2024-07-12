@@ -1,6 +1,6 @@
 package fr.jee_project.calendrier_mn_sg.controller.rest;
 
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.dto.UserDto;
 import fr.jee_project.calendrier_mn_sg.mapper.UserMapper;
 import fr.jee_project.calendrier_mn_sg.service.UserService;
@@ -41,8 +41,8 @@ class UtilisateurRestControllerUnitTest {
 
     @Test
     void testGetAllUtilisateurs() throws Exception {
-        User utilisateur = new User();
-        Page<User> utilisateurs = new PageImpl<>(Arrays.asList(utilisateur));
+        UserCal utilisateur = new UserCal();
+        Page<UserCal> utilisateurs = new PageImpl<>(Arrays.asList(utilisateur));
 
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
 
@@ -56,7 +56,7 @@ class UtilisateurRestControllerUnitTest {
 
     @Test
     void testGetUtilisateurById() throws Exception {
-        User utilisateur = new User();
+        UserCal utilisateur = new UserCal();
         when(utilisateurService.findById(anyLong())).thenReturn(utilisateur);
 
         mvc.perform(get("/api/utilisateurs/1"))
@@ -67,7 +67,7 @@ class UtilisateurRestControllerUnitTest {
 
     @Test
     void testCreateUtilisateur() throws Exception {
-        User utilisateur = new User();
+        UserCal utilisateur = new UserCal();
 
         when(utilisateurMapper.toEntity(any(UserDto.class))).thenReturn(utilisateur);
 
@@ -84,13 +84,13 @@ class UtilisateurRestControllerUnitTest {
                                 """))
                 .andExpect(status().isCreated());
 
-        verify(utilisateurService, times(1)).save(any(User.class));
+        verify(utilisateurService, times(1)).save(any(UserCal.class));
     }
 
 
     @Test
     void testUpdateUtilisateur() throws Exception {
-        User utilisateur = new User();
+        UserCal utilisateur = new UserCal();
         when(utilisateurService.findById(anyLong())).thenReturn(utilisateur);
 
         mvc.perform(put("/api/utilisateurs/1")
@@ -107,18 +107,18 @@ class UtilisateurRestControllerUnitTest {
                 .andExpect(status().isOk());
 
         verify(utilisateurService, times(1)).findById(anyLong());
-        verify(utilisateurService, times(1)).save(any(User.class));
+        verify(utilisateurService, times(1)).save(any(UserCal.class));
     }
 
     @Test
     void testDeleteUtilisateur() throws Exception {
-        User utilisateur = new User();
+        UserCal utilisateur = new UserCal();
         when(utilisateurService.findById(anyLong())).thenReturn(utilisateur);
 
         mvc.perform(delete("/api/utilisateurs/1"))
                 .andExpect(status().isOk());
 
         verify(utilisateurService, times(1)).findById(anyLong());
-        verify(utilisateurService, times(1)).delete(any(User.class));
+        verify(utilisateurService, times(1)).delete(any(UserCal.class));
     }
 }

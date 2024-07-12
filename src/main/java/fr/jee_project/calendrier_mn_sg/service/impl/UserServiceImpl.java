@@ -1,6 +1,6 @@
 package fr.jee_project.calendrier_mn_sg.service.impl;
 
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.repository.UserRepository;
 import fr.jee_project.calendrier_mn_sg.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,13 +24,13 @@ public class UserServiceImpl implements UserService {
     private UserRepository utilisateurRepository;
 
     @Override
-    public Page<User> findAll(Pageable pageable) {
+    public Page<UserCal> findAll(Pageable pageable) {
         return this.utilisateurRepository.findAll(pageable);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User utilisateur = utilisateurRepository.findByEmail(username);
+        UserCal utilisateur = utilisateurRepository.findByEmail(username);
 
         if (utilisateur == null) {
             throw new UsernameNotFoundException("Utilisateur non trouvé");
@@ -40,17 +40,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public UserCal findByEmail(String email) {
         return this.utilisateurRepository.findByEmail(email);
     }
 
     @Override
-    public User findById(Long id) {
+    public UserCal findById(Long id) {
         return this.utilisateurRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé"));
     }
 
     @Override
-    public void save(User utilisateur) {
+    public void save(UserCal utilisateur) {
         utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
         utilisateur.setSolde(500);
 
@@ -58,22 +58,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(User utilisateur) {
+    public void delete(UserCal utilisateur) {
         this.utilisateurRepository.delete(utilisateur);
     }
 
     @Override
-    public User subractPoints(User utilisateur, int points) {
+    public UserCal subractPoints(UserCal utilisateur, int points) {
         utilisateur.setSolde(utilisateur.getSolde() - points);
         return this.utilisateurRepository.save(utilisateur);
     }
 
     @Override
-    public User utilisateurFromSecurityContext(SecurityContext securityContext) {
+    public UserCal utilisateurFromSecurityContext(SecurityContext securityContext) {
         Authentication authentication = securityContext.getAuthentication();
         if (authentication == null) {
             throw new UsernameNotFoundException("Utilisateur non trouvé");
         }
-        return (User) authentication.getPrincipal();
+        return (UserCal) authentication.getPrincipal();
     }
 }

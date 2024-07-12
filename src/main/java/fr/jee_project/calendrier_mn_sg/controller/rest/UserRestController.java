@@ -1,6 +1,6 @@
 package fr.jee_project.calendrier_mn_sg.controller.rest;
 
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.dto.UserDto;
 import fr.jee_project.calendrier_mn_sg.mapper.UserMapper;
 import fr.jee_project.calendrier_mn_sg.service.UserService;
@@ -24,13 +24,13 @@ public class UserRestController {
 
     @GetMapping("")
     @Operation(summary = "Get all utilisateurs")
-    public Page<User> getAllUtilisateurs(@PageableDefault() Pageable pageable) {
+    public Page<UserCal> getAllUtilisateurs(@PageableDefault() Pageable pageable) {
         return utilisateurService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get utilisateur by id")
-    public User getUtilisateurById(@PathVariable Long id) {
+    public UserCal getUtilisateurById(@PathVariable Long id) {
         return utilisateurService.findById(id);
     }
 
@@ -49,7 +49,7 @@ public class UserRestController {
             @PathVariable Long id,
             @Valid @RequestBody UserDto utilisateur
     ) {
-        User utilisateurToUpdate = utilisateurService.findById(id);
+        UserCal utilisateurToUpdate = utilisateurService.findById(id);
         utilisateurToUpdate.setNom(utilisateur.getNom());
         utilisateurToUpdate.setPrenom(utilisateur.getPrenom());
         utilisateurToUpdate.setEmail(utilisateur.getEmail());
@@ -60,7 +60,7 @@ public class UserRestController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete utilisateur by id")
     public void deleteUtilisateur(@PathVariable Long id) {
-        User utilisateur = utilisateurService.findById(id);
+        UserCal utilisateur = utilisateurService.findById(id);
         utilisateurService.delete(utilisateur);
     }
 }

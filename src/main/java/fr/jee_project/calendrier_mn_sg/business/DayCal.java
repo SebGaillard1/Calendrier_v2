@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Day {
+public class DayCal {
     @EmbeddedId
     @NonNull
     private IdDay id;
@@ -23,7 +23,7 @@ public class Day {
 
     @ManyToOne()
     @Nullable()
-    private User utilisateur;
+    private UserCal utilisateur;
 
     @OneToMany()
     @JoinColumn(name = "jour", referencedColumnName = "jour")

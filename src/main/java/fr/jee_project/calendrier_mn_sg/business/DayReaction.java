@@ -18,7 +18,7 @@ public class DayReaction {
     @MapsId("utilisateurId")
     @ManyToOne
     @JoinColumn(name = "utilisateur_id", insertable = false, updatable = false)
-    private User utilisateur;
+    private UserCal utilisateur;
 
     @MapsId("reactionId")
     @ManyToOne

@@ -2,7 +2,7 @@ package fr.jee_project.calendrier_mn_sg.service.impl;
 
 import fr.jee_project.calendrier_mn_sg.business.ReactionType;
 import fr.jee_project.calendrier_mn_sg.business.DayReaction;
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDayReaction;
 import fr.jee_project.calendrier_mn_sg.repository.DayReactionRepository;
@@ -19,7 +19,7 @@ public class DayReactionServiceImpl implements DayReactionService {
     private final DayReactionRepository reactionJourRepository;
 
     @Override
-    public void addOrRemoveReactionJour(IdDay jourId, ReactionType typeReaction, User utilisateur) {
+    public void addOrRemoveReactionJour(IdDay jourId, ReactionType typeReaction, UserCal utilisateur) {
         if (reactionJourRepository.existsById(new IdDayReaction(jourId, utilisateur.getId(), typeReaction.getId()))) {
             reactionJourRepository.deleteById(new IdDayReaction(jourId, utilisateur.getId(), typeReaction.getId()));
         } else {

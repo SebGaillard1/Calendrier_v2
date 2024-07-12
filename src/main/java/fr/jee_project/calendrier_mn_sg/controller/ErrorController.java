@@ -1,6 +1,6 @@
 package fr.jee_project.calendrier_mn_sg.controller;
 
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class ErrorController {
         modelAndView.setViewName("error");
 
         try {
-            User currentUser = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+            UserCal currentUser = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
             modelAndView.addObject("theme", currentUser.getTheme());
         } catch (Exception e) {
             modelAndView.addObject("theme", "light");
@@ -46,7 +46,7 @@ public class ErrorController {
         modelAndView.setViewName("error");
 
         try {
-            User currentUser = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+            UserCal currentUser = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
             modelAndView.addObject("theme", currentUser.getTheme());
         } catch (Exception e) {
             modelAndView.addObject("theme", "light");

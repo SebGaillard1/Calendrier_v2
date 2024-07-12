@@ -1,9 +1,9 @@
 package fr.jee_project.calendrier_mn_sg.controller;
 
 import fr.jee_project.calendrier_mn_sg.business.Gif;
-import fr.jee_project.calendrier_mn_sg.business.Day;
+import fr.jee_project.calendrier_mn_sg.business.DayCal;
 import fr.jee_project.calendrier_mn_sg.business.ReactionType;
-import fr.jee_project.calendrier_mn_sg.business.User;
+import fr.jee_project.calendrier_mn_sg.business.UserCal;
 import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 import fr.jee_project.calendrier_mn_sg.dto.UserDto;
 import fr.jee_project.calendrier_mn_sg.mapper.GifMapper;
@@ -85,7 +85,7 @@ public class MainController {
             @RequestParam(value = "distant", defaultValue = "true") String distant
     ) {
         IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        Day jourEntity = jourService.findById(jourId);
+        DayCal jourEntity = jourService.findById(jourId);
 
         model.addAttribute("jour", jourEntity);
         model.addAttribute("distant", Boolean.parseBoolean(distant));
@@ -101,10 +101,10 @@ public class MainController {
             @PathVariable(value = "jour") String jour,
             @PathVariable(value = "mois") String mois
     ) {
-        User utilisateur = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+        UserCal utilisateur = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
 
         IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        Day jourEntity = jourService.findById(jourId);
+        DayCal jourEntity = jourService.findById(jourId);
 
         if (jourEntity.getGif() != null) {
             throw new IllegalArgumentException("Gif déjà ajouté");
@@ -143,7 +143,7 @@ public class MainController {
             @PathVariable(value = "mois") String mois,
             @PathVariable(value = "reaction") String reaction
     ) {
-        User utilisateur = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+        UserCal utilisateur = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
 
         IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
 

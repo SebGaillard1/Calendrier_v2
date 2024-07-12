@@ -41,14 +41,14 @@
 <body>
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Connexion</h3>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-danger" role="alert" th:if="${param.error}">
-                        Les informations d'identification sont incorrectes. Veuillez réessayer.
+                        Adresse mail ou mot de passe incorrect.
                         <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
                     </div>
                     <div class="alert alert-success" role="alert" th:if="${param.logout}">

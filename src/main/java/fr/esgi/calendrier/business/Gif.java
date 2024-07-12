@@ -21,6 +21,6 @@ public class Gif {
     @NonNull()
     private String url;
 
-    @Length(max = 128, message = "La légende doit faire moins de 128 caractères")
+    @Length(max = 128, message = "La légende doit faire 128 caractères maximum")
     private String legende;
 }

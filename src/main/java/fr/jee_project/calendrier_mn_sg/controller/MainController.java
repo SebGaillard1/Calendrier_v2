@@ -26,14 +26,12 @@ import java.util.Iterator;
 @AllArgsConstructor
 public class MainController {
 
-    private final UserService utilisateurService;
-    private final UserMapper utilisateurMapper;
-
-    private final DayService jourService;
+    private final UserService userService;
+    private final UserMapper userMapper;
+    private final DayService dayService;
     private final GifService gifService;
-    private final GifMapper gifMapper;
-    private final ReactionTypeService typeReactionService;
-    private final DayReactionService reactionJourService;
+    private final ReactionTypeService reactionTypeService;
+    private final DayReactionService reactionDayService;
 
     @GetMapping("/register")
     public String showRegistrationForm() {
@@ -41,8 +39,8 @@ public class MainController {
     }
 
     @PostMapping("/register")
-    public String registration(@Valid UserDto utilisateurDto) {
-        utilisateurService.save(utilisateurMapper.toEntity(utilisateurDto));
+    public String registration(@Valid UserDto userDto) {
+        userService.save(userMapper.toEntity(userDto));
         return "redirect:/register?success";
     }
 
@@ -57,8 +55,8 @@ public class MainController {
             @PageableDefault(size = 7) Pageable pageable
     ) {
 
-        model.addAttribute("jours", jourService.findAll(pageable));
-        model.addAttribute("typeReactions", typeReactionService.findAll());
+        model.addAttribute("day", dayService.findAll(pageable));
+        model.addAttribute("reactionType", reactionTypeService.findAll());
 
         Iterator<Sort.Order> iterator = pageable.getSort().iterator();
         StringBuilder sortBuilder = new StringBuilder();
@@ -68,7 +66,6 @@ public class MainController {
             sortBuilder.append(',');
             sortBuilder.append(order.getDirection());
             if (iterator.hasNext()) {
-                // Bricodage
                 sortBuilder.append("&sort=");
             }
         }
@@ -77,40 +74,40 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("gif/save/form/{jour}/{mois}")
+    @GetMapping("gif/save/form/{day}/{month}")
     public String gifDistant(
             Model model,
-            @PathVariable(value = "jour") String jour,
-            @PathVariable(value = "mois") String mois,
+            @PathVariable(value = "day") String jour,
+            @PathVariable(value = "month") String mois,
             @RequestParam(value = "distant", defaultValue = "true") String distant
     ) {
         IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        DayCal jourEntity = jourService.findById(jourId);
+        DayCal dayEntity = dayService.findById(jourId);
 
-        model.addAttribute("jour", jourEntity);
+        model.addAttribute("jour", dayEntity);
         model.addAttribute("distant", Boolean.parseBoolean(distant));
 
         return "gif";
     }
 
-    @PostMapping("gif/save/form/{jour}/{mois}")
+    @PostMapping("gif/save/form/{day}/{month}")
     public String addGif(
             String url,
             String legende,
             MultipartFile file,
-            @PathVariable(value = "jour") String jour,
-            @PathVariable(value = "mois") String mois
+            @PathVariable(value = "day") String jour,
+            @PathVariable(value = "month") String mois
     ) {
-        UserCal utilisateur = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+        UserCal user = userService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
 
         IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
-        DayCal jourEntity = jourService.findById(jourId);
+        DayCal dayEntity = dayService.findById(jourId);
 
-        if (jourEntity.getGif() != null) {
-            throw new IllegalArgumentException("Gif déjà ajouté");
+        if (dayEntity.getGif() != null) {
+            throw new IllegalArgumentException("Gif already added");
         }
 
-        if (utilisateur.getSolde() < jourEntity.getPoints()) {
+        if (user.getSolde() < dayEntity.getPoints()) {
             throw new IllegalArgumentException("Solde insuffisant");
         }
 
@@ -122,33 +119,30 @@ public class MainController {
             }
         }
 
-        // Création du gif
         Gif gif = new Gif();
         gif.setUrl(url);
         gif.setLegende(legende);
         gifService.save(gif);
 
-        // Ajout du gif au jour
-        jourService.setGif(jourId, gif, utilisateur);
+        dayService.setGif(jourId, gif, user);
 
-        // Soustraction des points
-        utilisateurService.subractPoints(utilisateur, jourEntity.getPoints());
+        userService.subractPoints(user, dayEntity.getPoints());
 
         return "redirect:/";
     }
 
-    @GetMapping("/jour/reaction/{jour}/{mois}/{reaction}")
+    @GetMapping("/jour/reaction/{day}/{month}/{reaction}")
     public String addReaction(
-            @PathVariable(value = "jour") String jour,
-            @PathVariable(value = "mois") String mois,
+            @PathVariable(value = "day") String jour,
+            @PathVariable(value = "month") String mois,
             @PathVariable(value = "reaction") String reaction
     ) {
-        UserCal utilisateur = utilisateurService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
+        UserCal user = userService.utilisateurFromSecurityContext(SecurityContextHolder.getContext());
 
         IdDay jourId = new IdDay(Integer.parseInt(jour), Integer.parseInt(mois));
 
-        ReactionType typeReactionEntity = typeReactionService.findById(Long.parseLong(reaction));
-        reactionJourService.addOrRemoveReactionJour(jourId, typeReactionEntity, utilisateur);
+        ReactionType typeReactionEntity = reactionTypeService.findById(Long.parseLong(reaction));
+        reactionDayService.addOrRemoveReactionJour(jourId, typeReactionEntity, user);
 
         return "redirect:/";
     }

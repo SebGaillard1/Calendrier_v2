@@ -5,7 +5,7 @@ import fr.jee_project.calendrier_mn_sg.business.ReactionType;
 import java.util.List;
 
 public interface ReactionTypeService {
-    void save(ReactionType typeReaction);
+    void save(ReactionType reactionType);
 
     ReactionType findById(Long id);
 

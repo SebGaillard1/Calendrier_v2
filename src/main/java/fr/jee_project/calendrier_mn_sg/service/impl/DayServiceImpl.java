@@ -17,33 +17,33 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @AllArgsConstructor
 public class DayServiceImpl implements DayService {
-    private final DayRepository jourRepository;
+    private final DayRepository dayRepository;
 
     @Override
-    public void save(DayCal jour) {
-        this.jourRepository.save(jour);
+    public void save(DayCal day) {
+        this.dayRepository.save(day);
     }
 
     @Override
     public void setGif(IdDay id, Gif gif, UserCal utilisateur) {
-        DayCal jour = this.jourRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Day not found"));
-        jour.setGif(gif);
-        jour.setUtilisateur(utilisateur);
-        this.jourRepository.save(jour);
+        DayCal day = this.dayRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Day not found"));
+        day.setGif(gif);
+        day.setUtilisateur(utilisateur);
+        this.dayRepository.save(day);
     }
 
     @Override
     public Page<DayCal> findAll(Pageable pageable) {
-        return this.jourRepository.findAll(pageable);
+        return this.dayRepository.findAll(pageable);
     }
 
     @Override
     public DayCal findById(IdDay id) {
-        return this.jourRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Day not found"));
+        return this.dayRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Day not found"));
     }
 
     @Override
-    public void delete(DayCal jour) {
-        this.jourRepository.delete(jour);
+    public void delete(DayCal day) {
+        this.dayRepository.delete(day);
     }
 }

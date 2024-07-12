@@ -13,11 +13,11 @@ public interface UserService extends UserDetailsService {
 
     UserCal findById(Long id);
 
-    void save(UserCal utilisateur);
+    void save(UserCal user);
 
-    void delete(UserCal utilisateur);
+    void delete(UserCal user);
 
-    UserCal subractPoints(UserCal utilisateur, int points);
+    UserCal subractPoints(UserCal user, int points);
 
     UserCal utilisateurFromSecurityContext(SecurityContext securityContext);
 }

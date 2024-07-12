@@ -16,18 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class DayReactionServiceImpl implements DayReactionService {
 
-    private final DayReactionRepository reactionJourRepository;
+    private final DayReactionRepository reactionDayRepository;
 
     @Override
-    public void addOrRemoveReactionJour(IdDay jourId, ReactionType typeReaction, UserCal utilisateur) {
-        if (reactionJourRepository.existsById(new IdDayReaction(jourId, utilisateur.getId(), typeReaction.getId()))) {
-            reactionJourRepository.deleteById(new IdDayReaction(jourId, utilisateur.getId(), typeReaction.getId()));
+    public void addOrRemoveReactionJour(IdDay dayId, ReactionType typeReaction, UserCal user) {
+        if (reactionDayRepository.existsById(new IdDayReaction(dayId, user.getId(), typeReaction.getId()))) {
+            reactionDayRepository.deleteById(new IdDayReaction(dayId, user.getId(), typeReaction.getId()));
         } else {
-            DayReaction reactionJour = new DayReaction();
-            reactionJour.setId(new IdDayReaction(jourId, utilisateur.getId(), typeReaction.getId()));
-            reactionJour.setUtilisateur(utilisateur);
-            reactionJour.setTypeReaction(typeReaction);
-            reactionJourRepository.save(reactionJour);
+            DayReaction reactionday = new DayReaction();
+            reactionday.setId(new IdDayReaction(dayId, user.getId(), typeReaction.getId()));
+            reactionday.setUtilisateur(user);
+            reactionday.setTypeReaction(typeReaction);
+            reactionDayRepository.save(reactionday);
         }
     }
 }

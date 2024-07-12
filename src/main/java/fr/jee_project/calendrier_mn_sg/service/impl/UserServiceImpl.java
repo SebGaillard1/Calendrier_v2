@@ -21,58 +21,58 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
-    private UserRepository utilisateurRepository;
+    private UserRepository userRepository;
 
     @Override
     public Page<UserCal> findAll(Pageable pageable) {
-        return this.utilisateurRepository.findAll(pageable);
+        return this.userRepository.findAll(pageable);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserCal utilisateur = utilisateurRepository.findByEmail(username);
+        UserCal user = userRepository.findByEmail(username);
 
-        if (utilisateur == null) {
-            throw new UsernameNotFoundException("Utilisateur non trouvé");
+        if (user == null) {
+            throw new UsernameNotFoundException("user not found");
         }
 
-        return utilisateur;
+        return user;
     }
 
     @Override
     public UserCal findByEmail(String email) {
-        return this.utilisateurRepository.findByEmail(email);
+        return this.userRepository.findByEmail(email);
     }
 
     @Override
     public UserCal findById(Long id) {
-        return this.utilisateurRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé"));
+        return this.userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("user not found"));
     }
 
     @Override
-    public void save(UserCal utilisateur) {
-        utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
-        utilisateur.setSolde(500);
+    public void save(UserCal user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setSolde(500);
 
-        this.utilisateurRepository.save(utilisateur);
+        this.userRepository.save(user);
     }
 
     @Override
-    public void delete(UserCal utilisateur) {
-        this.utilisateurRepository.delete(utilisateur);
+    public void delete(UserCal user) {
+        this.userRepository.delete(user);
     }
 
     @Override
-    public UserCal subractPoints(UserCal utilisateur, int points) {
-        utilisateur.setSolde(utilisateur.getSolde() - points);
-        return this.utilisateurRepository.save(utilisateur);
+    public UserCal subractPoints(UserCal user, int points) {
+        user.setSolde(user.getSolde() - points);
+        return this.userRepository.save(user);
     }
 
     @Override
     public UserCal utilisateurFromSecurityContext(SecurityContext securityContext) {
         Authentication authentication = securityContext.getAuthentication();
         if (authentication == null) {
-            throw new UsernameNotFoundException("Utilisateur non trouvé");
+            throw new UsernameNotFoundException("user not found");
         }
         return (UserCal) authentication.getPrincipal();
     }

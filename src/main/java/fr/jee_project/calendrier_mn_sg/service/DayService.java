@@ -8,13 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface DayService {
-    void save(DayCal jour);
+    void save(DayCal day);
 
-    void setGif(IdDay id, Gif gif, UserCal utilisateur);
+    void setGif(IdDay id, Gif gif, UserCal user);
 
     Page<DayCal> findAll(Pageable pageable);
 
     DayCal findById(IdDay id);
 
-    void delete(DayCal jour);
+    void delete(DayCal day);
 }

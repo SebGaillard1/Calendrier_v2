@@ -31,10 +31,10 @@ public class InitialiseData implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        ajoutDesReactions();
-        ajoutDesJours();
         ajoutUtilisateurParDefaut();
         deleteAllUploadingGif();
+        ajoutDesReactions();
+        ajoutDesJours();
     }
 
     private int getMonthDays(int month) {
@@ -46,18 +46,13 @@ public class InitialiseData implements CommandLineRunner {
             return 31;
         }
     }
-
-    private void ajoutDesJours() {
-        int mois = new Date().getMonth() + 1;
-
-        for (int i = 1; i <= getMonthDays(mois); i++) {
-            IdDay jourId = new IdDay(i, mois);
-            int point = random.nextInt(100);
-            DayCal jour = new DayCal(jourId, point);
-            jourService.save(jour);
+    private void deleteAllUploadingGif() {
+        try {
+            gifService.deleteAllUploadingGif();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
     private void ajoutDesReactions() {
         ArrayList<String> emojis = new ArrayList<>();
         emojis.add("\uD83D\uDE00");
@@ -72,6 +67,18 @@ public class InitialiseData implements CommandLineRunner {
             typeReactionService.save(typeReaction);
         }
     }
+    private void ajoutDesJours() {
+        int mois = new Date().getMonth() + 1;
+
+        for (int i = 1; i <= getMonthDays(mois); i++) {
+            IdDay jourId = new IdDay(i, mois);
+            int point = random.nextInt(100);
+            DayCal jour = new DayCal(jourId, point);
+            jourService.save(jour);
+        }
+    }
+
+
 
     private void ajoutUtilisateurParDefaut() {
         UserCal utilisateur = new UserCal();
@@ -83,11 +90,5 @@ public class InitialiseData implements CommandLineRunner {
         utilisateurService.save(utilisateur);
     }
 
-    private void deleteAllUploadingGif() {
-        try {
-            gifService.deleteAllUploadingGif();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

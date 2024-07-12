@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Length;
 @Value
 public class GifDto {
 
-    @Pattern(regexp = "^.+\\.(?i)(gif)$", message = "L'URL doit se terminer par .gif, .Gif ou .GIF")
+    @Pattern(regexp = "^.+\\.(?i)(gif)$", message = "L'url doit se terminer par .gif, .Gif ou .GIF")
     @NotNull
     public String url;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

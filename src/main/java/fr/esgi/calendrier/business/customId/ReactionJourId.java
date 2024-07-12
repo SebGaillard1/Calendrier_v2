@@ -21,7 +21,6 @@ public class ReactionJourId implements Serializable {
     @Column(name = "reaction_id")
     private Long reactionId;
 
-    // Override equals and hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

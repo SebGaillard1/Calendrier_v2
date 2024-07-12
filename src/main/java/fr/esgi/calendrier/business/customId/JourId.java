@@ -16,7 +16,6 @@ public class JourId implements Serializable {
     private int jour;
     private int mois;
 
-    // Override equals and hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

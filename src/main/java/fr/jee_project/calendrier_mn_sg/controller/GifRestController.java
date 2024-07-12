@@ -1,4 +1,4 @@
-package fr.jee_project.calendrier_mn_sg.controller.rest;
+package fr.jee_project.calendrier_mn_sg.controller;
 
 import fr.jee_project.calendrier_mn_sg.business.Gif;
 import fr.jee_project.calendrier_mn_sg.dto.GifDto;

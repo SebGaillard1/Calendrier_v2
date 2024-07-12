@@ -1,6 +1,6 @@
-package fr.jee_project.calendrier_mn_sg.controller.rest;
+package fr.jee_project.calendrier_mn_sg.controller;
 
-import fr.jee_project.calendrier_mn_sg.business.error.ErrorMessage;
+import fr.jee_project.calendrier_mn_sg.business.ErrorMessage;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;

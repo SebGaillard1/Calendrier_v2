@@ -3,7 +3,7 @@ package fr.jee_project.calendrier_mn_sg.service.impl;
 import fr.jee_project.calendrier_mn_sg.business.Gif;
 import fr.jee_project.calendrier_mn_sg.business.DayCal;
 import fr.jee_project.calendrier_mn_sg.business.UserCal;
-import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
+import fr.jee_project.calendrier_mn_sg.business.IdDay;
 import fr.jee_project.calendrier_mn_sg.repository.DayRepository;
 import fr.jee_project.calendrier_mn_sg.service.DayService;
 import jakarta.persistence.EntityNotFoundException;

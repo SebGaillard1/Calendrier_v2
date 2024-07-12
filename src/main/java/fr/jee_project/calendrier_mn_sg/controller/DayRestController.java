@@ -1,7 +1,7 @@
-package fr.jee_project.calendrier_mn_sg.controller.rest;
+package fr.jee_project.calendrier_mn_sg.controller;
 
 import fr.jee_project.calendrier_mn_sg.business.DayCal;
-import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
+import fr.jee_project.calendrier_mn_sg.business.IdDay;
 import fr.jee_project.calendrier_mn_sg.dto.DayDto;
 import fr.jee_project.calendrier_mn_sg.dto.UpdatedDayDto;
 import fr.jee_project.calendrier_mn_sg.mapper.DayMapper;

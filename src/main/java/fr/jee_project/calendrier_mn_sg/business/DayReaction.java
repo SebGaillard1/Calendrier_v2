@@ -1,6 +1,5 @@
 package fr.jee_project.calendrier_mn_sg.business;
 
-import fr.jee_project.calendrier_mn_sg.business.Id.IdDayReaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

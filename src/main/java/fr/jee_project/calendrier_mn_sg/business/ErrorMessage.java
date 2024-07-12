@@ -1,4 +1,4 @@
-package fr.jee_project.calendrier_mn_sg.business.error;
+package fr.jee_project.calendrier_mn_sg.business;
 
 import java.util.Date;
 

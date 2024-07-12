@@ -1,4 +1,4 @@
-package fr.jee_project.calendrier_mn_sg.business.Id;
+package fr.jee_project.calendrier_mn_sg.business;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

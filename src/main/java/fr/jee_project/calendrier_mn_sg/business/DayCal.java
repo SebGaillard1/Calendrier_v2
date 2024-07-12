@@ -1,6 +1,5 @@
 package fr.jee_project.calendrier_mn_sg.business;
 
-import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;

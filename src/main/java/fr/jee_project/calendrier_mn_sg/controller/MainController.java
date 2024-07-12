@@ -4,7 +4,7 @@ import fr.jee_project.calendrier_mn_sg.business.Gif;
 import fr.jee_project.calendrier_mn_sg.business.DayCal;
 import fr.jee_project.calendrier_mn_sg.business.ReactionType;
 import fr.jee_project.calendrier_mn_sg.business.UserCal;
-import fr.jee_project.calendrier_mn_sg.business.Id.IdDay;
+import fr.jee_project.calendrier_mn_sg.business.IdDay;
 import fr.jee_project.calendrier_mn_sg.dto.UserDto;
 import fr.jee_project.calendrier_mn_sg.mapper.GifMapper;
 import fr.jee_project.calendrier_mn_sg.mapper.UserMapper;
